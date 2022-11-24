@@ -103,9 +103,12 @@ public class Grid {
         }
     }
 
-    public void placeShipHorizontal(int vertical, int horizontal, int shipSize, Grid playerGrid) {
+    public void placeShipHorizontal(int vertical, int horizontal, int shipSize, Grid playerGrid) throws Exception{
         //Place horizontal
         int j = horizontal;
+        if(playerGrid.grid[vertical].length < horizontal + shipSize){
+            throw new Exception();
+        }
         while (shipSize > 0) {
             playerGrid.grid[vertical][j] = "X";
             shipSize--;
@@ -113,8 +116,11 @@ public class Grid {
         }
     }
 
-    public void placeShipVertical(int vertical, int horizontal, int shipSize, Grid playerGrid){
+    public void placeShipVertical(int vertical, int horizontal, int shipSize, Grid playerGrid) throws Exception {
         int j= vertical;
+        if(playerGrid.grid.length < vertical + shipSize ){
+            throw new Exception();
+        }
         while (shipSize>0){
             playerGrid.grid[j][horizontal]="X";
             shipSize--;
