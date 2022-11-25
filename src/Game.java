@@ -33,12 +33,13 @@ public class Game {
                     }
                     break;
                 }
-
                 hitComboPlayer = checkHit(vertical, horizontal, players[0], players[1]);
             }
             while (hitComboCPU){
                 while (hitComboCPU){
                     hitComboCPU = cpuAttack(players[1],players[0]);
+                    System.out.println(Color.RED_BOLD + "WHERE THE ENEMY HAS SHOT: " + Color.RESET);
+                    players[0].getPlayerGrid().printGrid();
                 }
             }
             winner = checkWin(players[0]);
@@ -52,7 +53,7 @@ public class Game {
         while (cpuAttacked) {
             int vertical = (int) Math.floor(Math.random() * 9);
             int horizontal = (int) Math.floor(Math.random() * 9);
-            if (cpu.getPlayerGrid().getGrid()[vertical][horizontal].equals(Color.HIT_SYMBOL.toString()) && cpu.getPlayerGrid().getGrid()[vertical][horizontal].equals(Color.MISS_SYMBOL.toString())) {
+            if (cpu.getPlayerGrid().getGrid()[vertical][horizontal].equals(Color.HIT_SYMBOL.toString()) || cpu.getPlayerGrid().getGrid()[vertical][horizontal].equals(Color.MISS_SYMBOL.toString())) {
                 continue;
             }
             cpuAttacked = checkHit(vertical,horizontal,cpu,player);
@@ -102,12 +103,13 @@ public class Game {
     }
 
     public static boolean checkHit(int vertical, int horizontal, Player attacker, Player target) {
-        if(target.getPlayerGrid().getGrid()[vertical][horizontal].equals("-")){
+        if(!target.getMatchGrid().getGrid()[vertical][horizontal].equals("-")){
             System.out.println(Color.GREEN_BOLD + "We already attacked that position sir!" + Color.RESET);
             return true;
         }
         if (!target.getPlayerGrid().getGrid()[vertical][horizontal].equals("-")) {
             attacker.getMatchGrid().getGrid()[vertical][horizontal] = Color.HIT_SYMBOL.toString();
+            target.getPlayerGrid().getGrid()[vertical][horizontal] = Color.HIT_SYMBOL.toString();
             attacker.setCounterHits(attacker.getCounterHits() + 1);
             if(attacker.equals(players[1])){
                 System.out.println("ENEMY HIT");
@@ -115,14 +117,18 @@ public class Game {
             }
             System.out.println(Color.GREEN_BOLD + "HIT!!" + Color.RESET);
             return true;
-        }
-        if(attacker.equals(players[1])){
-            System.out.println("ENEMY MISS");
+        }else{
+            if (attacker.equals(players[1])) {
+                System.out.println("ENEMY MISS");
+                attacker.getMatchGrid().getGrid()[vertical][horizontal] = Color.MISS_SYMBOL.toString();
+                target.getPlayerGrid().getGrid()[vertical][horizontal] = Color.MISS_SYMBOL.toString();
+                return false;
+            }
+            System.out.println("MISSED");
+            attacker.getMatchGrid().getGrid()[vertical][horizontal] = Color.MISS_SYMBOL.toString();
+            target.getPlayerGrid().getGrid()[vertical][horizontal] = Color.MISS_SYMBOL.toString();
             return false;
         }
-        System.out.println("MISSED");
-        attacker.getMatchGrid().getGrid()[vertical][horizontal] = Color.MISS_SYMBOL.toString();
-        return false;
     }
 
 
@@ -135,8 +141,7 @@ public class Game {
             int orientation = (int) Math.floor(Math.random() * 2);
             try {
                 generatedCarrier = placeCPUCarrier(vertical, horizontal, orientation, cpuGrid);
-            } catch (Exception e) {
-                System.out.println("OUT OF BOUNDS");
+            } catch (Exception ignored) {
             }
         }
         boolean generatedBattleShip = false;
@@ -146,8 +151,7 @@ public class Game {
             int orientation = (int) Math.floor(Math.random() * 2);
             try {
                 generatedBattleShip = placeCPUBattleShip(vertical, horizontal, orientation, cpuGrid);
-            } catch (Exception e) {
-                System.out.println("OUT OF BOUNDS");
+            } catch (Exception ignored) {
             }
         }
         boolean generatedCruiser = false;
@@ -157,8 +161,7 @@ public class Game {
             int orientation = (int) Math.floor(Math.random() * 2);
             try {
                 generatedCruiser = placeCPUSize3(vertical, horizontal, orientation, cpuGrid);
-            } catch (Exception e) {
-                System.out.println("OUT OF BOUNDS");
+            } catch (Exception ignored) {
             }
         }
         boolean generatedSubmarine = false;
@@ -168,8 +171,7 @@ public class Game {
             int orientation = (int) Math.floor(Math.random() * 2);
             try {
                 generatedSubmarine = placeCPUSize3(vertical, horizontal, orientation, cpuGrid);
-            } catch (Exception e) {
-                System.out.println("OUT OF BOUNDS");
+            } catch (Exception ignored) {
             }
         }
         boolean generatedDestroyer = false;
@@ -179,8 +181,7 @@ public class Game {
             int orientation = (int) Math.floor(Math.random() * 2);
             try {
                 generatedDestroyer = placeCPUDestroyer(vertical, horizontal, orientation, cpuGrid);
-            } catch (Exception e) {
-                System.out.println("OUT OF BOUNDS");
+            } catch (Exception ignored) {
             }
         }
     }
@@ -204,7 +205,7 @@ public class Game {
                     j++;
 
                 }
-                cpuGrid.printGrid();
+
                 return true;
             }
         }
@@ -221,7 +222,6 @@ public class Game {
                     shipSize--;
                     j++;
                 }
-                cpuGrid.printGrid();
                 return true;
             }
         }
@@ -246,7 +246,6 @@ public class Game {
                     shipSize--;
                     j++;
                 }
-                cpuGrid.printGrid();
                 return true;
             }
         }
@@ -263,7 +262,6 @@ public class Game {
                     shipSize--;
                     j++;
                 }
-                cpuGrid.printGrid();
                 return true;
             }
         }
@@ -287,7 +285,6 @@ public class Game {
                     shipSize--;
                     j++;
                 }
-                cpuGrid.printGrid();
                 return true;
             }
         }
@@ -304,7 +301,6 @@ public class Game {
                     shipSize--;
                     j++;
                 }
-                cpuGrid.printGrid();
                 return true;
             }
         }
@@ -326,7 +322,6 @@ public class Game {
                     cpuGrid.getGrid()[j][horizontal] = destroyer2.symbol;
                     j++;
                 }
-                cpuGrid.printGrid();
                 return true;
             }
         }
@@ -342,7 +337,7 @@ public class Game {
                     cpuGrid.getGrid()[vertical][j] = destroyer2.symbol;
                     j++;
                 }
-                cpuGrid.printGrid();
+
                 return true;
             }
         }

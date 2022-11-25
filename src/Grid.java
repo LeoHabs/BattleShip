@@ -191,7 +191,7 @@ public class Grid {
             throw new Exception();
         }
         while (shipSizeChecker > 0) {
-            playerGrid.grid[j][horizontal] = "X";
+            playerGrid.grid[j][horizontal] = ship.symbol;
             shipSizeChecker--;
             j++;
         }
