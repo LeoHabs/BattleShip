@@ -10,54 +10,90 @@ public class Grid {
         System.out.print("  ");
         for (int i = 0; i < letters.length; i++) {
             System.out.print(Color.BLUE_BOLD);
+            System.out.print("|");
             System.out.print(i + 1);
-            System.out.print(Color.RESET);
+            System.out.print("|");
             System.out.print(" ");
+            System.out.print(Color.RESET);
         }
         for (int i = 0; i < grid.length; i++) {
-            System.out.println(Color.BLUE_BOLD);
+            System.out.print(Color.BLUE_BOLD);
+            System.out.println();
+            System.out.println("_");
             System.out.print(letters[i]);
             System.out.print(Color.RESET);
             for (int j = 0; j < grid[i].length; j++) {
+                System.out.print(" ");
                 System.out.print(grid[i][j]);
+                System.out.print(" ");
                 System.out.print(" ");
             }
         }
         System.out.println();
+        System.out.println();
+        ;
     }
 
-    public void buildGrid(Player player){
+    public void printMatchGrid(){
+        System.out.print("  ");
+        for (int i = 0; i < letters.length; i++) {
+            System.out.print(Color.BLUE_BOLD);
+            System.out.print("|");
+            System.out.print(i + 1);
+            System.out.print("|");
+            System.out.print(" ");
+            System.out.print(Color.RESET);
+        }
+        for (int i = 0; i < grid.length; i++) {
+            System.out.print(Color.BLUE_BOLD);
+            System.out.println();
+            System.out.println("_");
+            System.out.print(letters[i]);
+            System.out.print(Color.RESET);
+            for (int j = 0; j < grid[i].length; j++) {
+                System.out.print(" ");
+                System.out.print(grid[i][j]);
+                System.out.print(" ");
+                System.out.print(" ");
+            }
+        }
+        System.out.println();
+        System.out.println();
+    }
+
+    public void buildGrid(Player player) {
+        player.getPlayerGrid().printGrid();
         boolean CarrierStat = false;
         boolean BattleShipStat = false;
         boolean CruiserStat = false;
         boolean SubmarineStat = false;
         boolean DestroyerStat = false;
-        System.out.println(Color.GREEN_BOLD + "Let's place a Carrier (length 5)!"+ Color.RESET);
-        while (!CarrierStat){
+        System.out.println(Color.GREEN_BOLD + "Let's place a Carrier (length 5)!" + Color.RESET);
+        while (!CarrierStat) {
             CarrierStat = choosePosition(new Carrier5(), player.getPlayerGrid());
         }
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
-        System.out.println(Color.GREEN_BOLD + "Let's place a Battleship (length 4)!"+ Color.RESET);
-        while (!BattleShipStat){
+        System.out.println(Color.GREEN_BOLD + "Let's place a Battleship (length 4)!" + Color.RESET);
+        while (!BattleShipStat) {
             BattleShipStat = choosePosition(new Battleship4(), player.getPlayerGrid());
         }
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
-        System.out.println(Color.GREEN_BOLD + "Let's place a Cruiser (length 3)!"+ Color.RESET);
-        while (!CruiserStat){
+        System.out.println(Color.GREEN_BOLD + "Let's place a Cruiser (length 3)!" + Color.RESET);
+        while (!CruiserStat) {
             CruiserStat = choosePosition(new Cruiser3(), player.getPlayerGrid());
         }
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
-        System.out.println(Color.GREEN_BOLD + "Let's place a Submarine (length 3)!"+ Color.RESET);
-        while (!SubmarineStat){
+        System.out.println(Color.GREEN_BOLD + "Let's place a Submarine (length 3)!" + Color.RESET);
+        while (!SubmarineStat) {
             SubmarineStat = choosePosition(new Submarine3(), player.getPlayerGrid());
         }
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
-        System.out.println(Color.GREEN_BOLD + "Finally, let's place a Destroyer (length 2)!"+ Color.RESET);
-        while (!DestroyerStat){
+        System.out.println(Color.GREEN_BOLD + "Finally, let's place a Destroyer (length 2)!" + Color.RESET);
+        while (!DestroyerStat) {
             DestroyerStat = choosePosition(new Destroyer2(), player.getPlayerGrid());
         }
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
@@ -74,21 +110,21 @@ public class Grid {
         System.out.println(Color.GREEN_BOLD + "Horizontal or Vertical Captain?" + Color.RESET);
         String orientation = scanner.next().toUpperCase();
 
-        switch (orientation){
+        switch (orientation) {
             case "HORIZONTAL":
             case "H":
                 try {
                     placeShipHorizontal(vertical, horizontal, ship.size, playerGrid);
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println(Color.RED_BOLD + "Sir that ship won't fit there. Please focus the enemy is upon us!" + Color.RESET);
                     return false;
                 }
                 return true;
             case "VERTICAL":
             case "V":
-                try{
-                placeShipVertical(vertical,horizontal,ship.size, playerGrid);
-                }catch(Exception e){
+                try {
+                    placeShipVertical(vertical, horizontal, ship.size, playerGrid);
+                } catch (Exception e) {
                     System.out.println(Color.RED_BOLD + "Sir that ship won't fit there. Please focus the enemy is upon us!" + Color.RESET);
                     return false;
                 }
@@ -103,10 +139,25 @@ public class Grid {
         }
     }
 
-    public void placeShipHorizontal(int vertical, int horizontal, int shipSize, Grid playerGrid) throws Exception{
+    public void placeShipHorizontal(int vertical, int horizontal, int shipSize, Grid playerGrid) throws Exception {
         //Place horizontal
+        int safecheckerHor = horizontal;
         int j = horizontal;
-        if(playerGrid.grid[vertical].length < horizontal + shipSize){
+        boolean safe = false;
+        int shipSizeCheck = shipSize;
+
+        while (shipSizeCheck > 0) {
+            if (playerGrid.grid[vertical][safecheckerHor].equals("-")) {
+                safecheckerHor++;
+                shipSizeCheck--;
+            }else{
+                System.out.println(Color.GREEN_BOLD + "We can't stack boats on top of each other sir"+ Color.RESET);
+                return;
+            }
+
+        }
+
+        if (playerGrid.grid[vertical].length < horizontal + shipSize) {
             throw new Exception();
         }
         while (shipSize > 0) {
@@ -117,12 +168,12 @@ public class Grid {
     }
 
     public void placeShipVertical(int vertical, int horizontal, int shipSize, Grid playerGrid) throws Exception {
-        int j= vertical;
-        if(playerGrid.grid.length < vertical + shipSize ){
+        int j = vertical;
+        if (playerGrid.grid.length < vertical + shipSize) {
             throw new Exception();
         }
-        while (shipSize>0){
-            playerGrid.grid[j][horizontal]="X";
+        while (shipSize > 0) {
+            playerGrid.grid[j][horizontal] = "X";
             shipSize--;
             j++;
         }
@@ -158,5 +209,11 @@ public class Grid {
         }
     }
 
+    public String[][] getGrid() {
+        return grid;
+    }
 
+    public void setGrid(String[][] grid) {
+        this.grid = grid;
+    }
 }
