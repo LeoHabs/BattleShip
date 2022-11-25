@@ -27,6 +27,14 @@ public class Player {
         this.playerGrid = playerGrid;
     }
 
+    public Grid getMatchGrid() {
+        return matchGrid;
+    }
+
+    public void setMatchGrid(Grid matchGrid) {
+        this.matchGrid = matchGrid;
+    }
+
     public int getCounterHits() {
         return counterHits;
     }

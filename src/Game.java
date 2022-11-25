@@ -5,7 +5,7 @@ public class Game {
     private static Player[] players = new Player[2];
 
 
-    public static void game() {
+    public static void game(){
         Scanner scanner = new Scanner(System.in);
         gameStartProcedure();
         Player winner = null;
@@ -13,12 +13,27 @@ public class Game {
             boolean hitComboPlayer = true;
             boolean hitComboCPU = true;
             while (hitComboPlayer) {
-                players[0].getPlayerGrid().printGrid();
+                players[0].getMatchGrid().printGrid();
                 System.out.println(Color.GREEN_BOLD + "Where do we shoot?" + Color.RESET);
-                System.out.println(Color.GREEN_BOLD + "Choose a row (A-J)" + Color.RESET);
-                int vertical = players[0].getPlayerGrid().letterToIndex(scanner.next());
-                System.out.println(Color.GREEN_BOLD + "Choose a column (1-10)" + Color.RESET);
-                int horizontal = scanner.nextInt() - 1;
+                int vertical;
+                while(true){
+                    System.out.println(Color.GREEN_BOLD + "Choose a row (A-J)" + Color.RESET);
+                    vertical = players[0].getMatchGrid().letterToIndex(scanner.next());
+                    if(vertical == 10){
+                        continue;
+                    }
+                    break;
+                }
+                int horizontal;
+                while(true){
+                    System.out.println(Color.GREEN_BOLD + "Choose a column (1-10)" + Color.RESET);
+                    horizontal = scanner.nextInt() - 1;
+                    if(vertical > 9 || vertical< 0){
+                        continue;
+                    }
+                    break;
+                }
+
                 hitComboPlayer = checkHit(vertical, horizontal, players[0], players[1]);
             }
             while (hitComboCPU){
@@ -26,9 +41,10 @@ public class Game {
                     hitComboCPU = cpuAttack(players[1],players[0]);
                 }
             }
-
+            winner = checkWin(players[0]);
+            winner = checkWin(players[1]);
         }
-
+        System.out.println(Color.GREEN_BOLD + "The winner is " + winner.getName() + Color.RESET);
     }
 
     public static boolean cpuAttack(Player cpu, Player player) {
@@ -86,8 +102,12 @@ public class Game {
     }
 
     public static boolean checkHit(int vertical, int horizontal, Player attacker, Player target) {
+        if(target.getPlayerGrid().getGrid()[vertical][horizontal].equals("-")){
+            System.out.println(Color.GREEN_BOLD + "We already attacked that position sir!" + Color.RESET);
+            return true;
+        }
         if (!target.getPlayerGrid().getGrid()[vertical][horizontal].equals("-")) {
-            attacker.getPlayerGrid().getGrid()[vertical][horizontal] = Color.HIT_SYMBOL.toString();
+            attacker.getMatchGrid().getGrid()[vertical][horizontal] = Color.HIT_SYMBOL.toString();
             attacker.setCounterHits(attacker.getCounterHits() + 1);
             if(attacker.equals(players[1])){
                 System.out.println("ENEMY HIT");
@@ -101,7 +121,7 @@ public class Game {
             return false;
         }
         System.out.println("MISSED");
-        attacker.getPlayerGrid().getGrid()[vertical][horizontal] = Color.MISS_SYMBOL.toString();
+        attacker.getMatchGrid().getGrid()[vertical][horizontal] = Color.MISS_SYMBOL.toString();
         return false;
     }
 
