@@ -5,9 +5,94 @@ public class Game {
     private static Player[] players = new Player[2];
 
 
+    public static void allGame(){
+        while(true) {
+            gameTitle();
+           if(menu() == 4){
+               return;
+           }
+        }
+    }
+
+    public static void game1V1(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Player One: ");
+        players[0] = new Player(Color.RED_BRIGHT + scanner.next() + Color.RESET);
+        players[0].getPlayerGrid().buildGrid(players[0]);
+        System.out.print("Player Two: ");
+        players[1] = new Player(Color.BLUE + scanner.next() + Color.RESET);
+        players[1].getPlayerGrid().buildGrid(players[1]);
+        System.out.println();
+        Player winner = null;
+        while (true) {
+            boolean hitComboPlayerOne = true;
+            while (hitComboPlayerOne) {
+                players[0].getMatchGrid().printGrid();
+                System.out.println(Color.GREEN_BOLD + "Where do we shoot?" + Color.RESET);
+                int vertical;
+                while(true){
+                    System.out.println(Color.GREEN_BOLD + "Choose a row (A-J)" + Color.RESET);
+                    vertical = players[0].getMatchGrid().letterToIndex(scanner.next());
+                    if(vertical == 10){
+                        continue;
+                    }
+                    break;
+                }
+                int horizontal;
+                while(true){
+                    System.out.println(Color.GREEN_BOLD + "Choose a column (1-10)" + Color.RESET);
+                    horizontal = scanner.nextInt() - 1;
+                    if(vertical > 9 || vertical< 0){
+                        continue;
+                    }
+                    break;
+                }
+                hitComboPlayerOne = checkHit(vertical, horizontal, players[0], players[1]);
+            }
+
+           boolean hitComboPlayerTwo = true;
+
+            while (hitComboPlayerTwo) {
+                players[1].getMatchGrid().printGrid();
+                System.out.println(Color.BLUE_BOLD + "Where do we shoot?" + Color.RESET);
+                int vertical;
+                while(true){
+                    System.out.println(Color.BLUE_BOLD + "Choose a row (A-J)" + Color.RESET);
+                    vertical = players[1].getMatchGrid().letterToIndex(scanner.next());
+                    if(vertical == 10){
+                        continue;
+                    }
+                    break;
+                }
+                int horizontal;
+                while(true){
+                    System.out.println(Color.BLUE_BOLD + "Choose a column (1-10)" + Color.RESET);
+                    horizontal = scanner.nextInt() - 1;
+                    if(vertical > 9 || vertical< 0){
+                        continue;
+                    }
+                    break;
+                }
+                hitComboPlayerTwo = checkHit(vertical, horizontal, players[1], players[0]);
+            }
+            winner = checkWin(players[0]);
+            if(winner.equals(players[0])){
+                System.out.println(players[0].getName()+ " won");
+                return;
+            }
+            winner = checkWin(players[1]);
+           if(winner.equals(players[1])){
+               System.out.println(players[1].getName()+ " won");
+               return;
+           }
+        }
+
+
+
+    }
     public static void game(){
         Scanner scanner = new Scanner(System.in);
-        gameStartProcedure();
+        gameStartProcedureVCPU();
         Player winner = null;
         while (winner == null) {
             boolean hitComboPlayer = true;
@@ -60,9 +145,8 @@ public class Game {
         }
     }
 
-    public static void gameStartProcedure() {
+    public static void gameStartProcedureVCPU() {
         Scanner scanner = new Scanner(System.in);
-        gameTitle();
         System.out.println(Color.SOLDIER);
         System.out.println(Color.GREEN_BOLD + "Captain please remember me of your name, sir!" + Color.RESET);
         System.out.print("Enter name: ");
@@ -99,6 +183,39 @@ public class Game {
                         "                                \\              < < <       |    \n" +
                         "                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println(Color.RESET);
+    }
+
+    public static int menu(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(Color.CYAN_BOLD);
+        System.out.println("|===============MENU===============|");
+        System.out.println("|1- SOLO PLAYER                    |");
+        System.out.println("|2- MULTIPLAYER                    |");
+        System.out.println("|3- INSTRUCTIONS                   |");
+        System.out.println("|4- EXIT                           |");
+        System.out.println("|==================================|");
+
+        int option = scanner.nextInt();
+
+        switch (option){
+            case 1:
+                game();
+                break;
+            case 2:
+                game1V1();
+                break;
+            case 3:
+                instructions();
+                break;
+            case 4:
+                System.out.println("Goodbye");
+                break;
+        }
+        return option;
+    }
+
+    public static void instructions(){
+
     }
 
     public static boolean checkHit(int vertical, int horizontal, Player attacker, Player target) {
