@@ -54,22 +54,24 @@ public class Grid {
 
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
+
         try {
-            System.out.println();
-            System.out.println(Color.GREEN_BOLD + "Let's place a Battleship (length 4)!" + Color.RESET);
             while (!BattleShipStat) {
+                System.out.println();
+                System.out.println(Color.GREEN_BOLD + "Let's place a Battleship (length 4)!" + Color.RESET);
                 BattleShipStat = choosePosition(new Battleship4(), player.getPlayerGrid());
             }
         } catch (Exception e) {
             System.out.println(Color.RED_BOLD + "Sir please focus" + Color.RESET);
         }
-        System.out.println(Color.GREEN_BOLD + "Let's place a Carrier (length 5)!" + Color.RESET);
+
+
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
         try {
-            System.out.println();
-            System.out.println(Color.GREEN_BOLD + "Let's place a Cruiser (length 3)!" + Color.RESET);
             while (!CruiserStat) {
+                System.out.println();
+                System.out.println(Color.GREEN_BOLD + "Let's place a Cruiser (length 3)!" + Color.RESET);
                 CruiserStat = choosePosition(new Cruiser3(), player.getPlayerGrid());
             }
         } catch (Exception e) {
@@ -79,20 +81,21 @@ public class Grid {
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
         try {
-            System.out.println();
-            System.out.println(Color.GREEN_BOLD + "Let's place a Submarine (length 3)!" + Color.RESET);
             while (!SubmarineStat) {
+                System.out.println();
+                System.out.println(Color.GREEN_BOLD + "Let's place a Submarine (length 3)!" + Color.RESET);
                 SubmarineStat = choosePosition(new Submarine3(), player.getPlayerGrid());
             }
         } catch (Exception e) {
             System.out.println(Color.RED_BOLD + "Sir please focus" + Color.RESET);
         }
+
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
         try {
-            System.out.println();
-            System.out.println(Color.GREEN_BOLD + "Finally, let's place a Destroyer (length 2)!" + Color.RESET);
             while (!DestroyerStat) {
+                System.out.println();
+                System.out.println(Color.GREEN_BOLD + "Finally, let's place a Destroyer (length 2)!" + Color.RESET);
                 DestroyerStat = choosePosition(new Destroyer2(), player.getPlayerGrid());
             }
         } catch (Exception e) {
@@ -168,7 +171,7 @@ public class Grid {
                 safecheckerHor++;
                 shipSizeCheck--;
             } else {
-                System.out.println(Color.GREEN_BOLD + "We can't stack boats on top of each other sir" + Color.RESET);
+                System.out.println(Color.RED_BOLD + "We can't stack boats on top of each other sir" + Color.RESET);
                 return;
             }
 
@@ -186,11 +189,25 @@ public class Grid {
 
     public void placeShipVertical(int vertical, int horizontal, Ship ship, Grid playerGrid) throws Exception {
         int j = vertical;
+        int safecheckerVer = vertical;
         int shipSizeChecker = ship.size;
         if (playerGrid.grid.length < vertical + ship.size) {
             throw new Exception();
         }
+
         while (shipSizeChecker > 0) {
+            if (playerGrid.grid[vertical][safecheckerVer].equals("-")) {
+                safecheckerVer++;
+                shipSizeChecker--;
+            } else {
+                System.out.println(Color.RED_BOLD + "We can't stack boats on top of each other sir" + Color.RESET);
+                return;
+            }
+
+        }
+
+        int shipSizeCheck2 = ship.size;
+        while (shipSizeCheck2 > 0) {
             playerGrid.grid[j][horizontal] = ship.symbol;
             shipSizeChecker--;
             j++;
