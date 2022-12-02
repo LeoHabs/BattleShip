@@ -7,16 +7,16 @@ public class Game {
     private static Player[] players = new Player[2];
 
 
-    public static void allGame(){
-        while(true) {
+    public static void allGame() {
+        while (true) {
             gameTitle();
-           if(menu() == 4){
-               return;
-           }
+            if (menu() == 4) {
+                return;
+            }
         }
     }
 
-    public static void game1V1(){
+    public static void game1V1() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Player One: ");
         players[0] = new Player(Color.RED_BRIGHT + scanner.next() + Color.RESET);
@@ -32,19 +32,19 @@ public class Game {
                 players[0].getMatchGrid().printGrid();
                 System.out.println(Color.GREEN_BOLD + "Where do we shoot?" + Color.RESET);
                 int vertical;
-                while(true){
+                while (true) {
                     System.out.println(Color.GREEN_BOLD + "Choose a row (A-J)" + Color.RESET);
                     vertical = players[0].getMatchGrid().letterToIndex(scanner.next());
-                    if(vertical == 10){
+                    if (vertical == 10) {
                         continue;
                     }
                     break;
                 }
                 int horizontal;
-                while(true){
+                while (true) {
                     System.out.println(Color.GREEN_BOLD + "Choose a column (1-10)" + Color.RESET);
                     horizontal = scanner.nextInt() - 1;
-                    if(vertical > 9 || vertical< 0){
+                    if (vertical > 9 || vertical < 0) {
                         continue;
                     }
                     break;
@@ -52,25 +52,25 @@ public class Game {
                 hitComboPlayerOne = checkHit(vertical, horizontal, players[0], players[1]);
             }
 
-           boolean hitComboPlayerTwo = true;
+            boolean hitComboPlayerTwo = true;
 
             while (hitComboPlayerTwo) {
                 players[1].getMatchGrid().printGrid();
                 System.out.println(Color.BLUE_BOLD + "Where do we shoot?" + Color.RESET);
                 int vertical;
-                while(true){
+                while (true) {
                     System.out.println(Color.BLUE_BOLD + "Choose a row (A-J)" + Color.RESET);
                     vertical = players[1].getMatchGrid().letterToIndex(scanner.next());
-                    if(vertical == 10){
+                    if (vertical == 10) {
                         continue;
                     }
                     break;
                 }
                 int horizontal;
-                while(true){
+                while (true) {
                     System.out.println(Color.BLUE_BOLD + "Choose a column (1-10)" + Color.RESET);
                     horizontal = scanner.nextInt() - 1;
-                    if(vertical > 9 || vertical< 0){
+                    if (vertical > 9 || vertical < 0) {
                         continue;
                     }
                     break;
@@ -78,21 +78,21 @@ public class Game {
                 hitComboPlayerTwo = checkHit(vertical, horizontal, players[1], players[0]);
             }
             winner = checkWin(players[0]);
-            if(winner.equals(players[0])){
-                System.out.println(players[0].getName()+ " won");
+            if (winner.equals(players[0])) {
+                System.out.println(players[0].getName() + " won");
                 return;
             }
             winner = checkWin(players[1]);
-           if(winner.equals(players[1])){
-               System.out.println(players[1].getName()+ " won");
-               return;
-           }
+            if (winner.equals(players[1])) {
+                System.out.println(players[1].getName() + " won");
+                return;
+            }
         }
 
 
-
     }
-    public static void game(){
+
+    public static void game() {
         Scanner scanner = new Scanner(System.in);
         gameStartProcedureVCPU();
         Player winner = null;
@@ -103,40 +103,32 @@ public class Game {
                 players[0].getMatchGrid().printGrid();
                 System.out.println(Color.GREEN_BOLD + "Where do we shoot?" + Color.RESET);
                 int vertical;
-                while(true){
+                while (true) {
                     System.out.println(Color.GREEN_BOLD + "Choose a row (A-J)" + Color.RESET);
                     vertical = players[0].getMatchGrid().letterToIndex(scanner.next());
-                    if(vertical == 10){
+                    if (vertical == 10) {
                         continue;
                     }
                     break;
                 }
                 int horizontal;
-                while(true){
+                while (true) {
                     System.out.println(Color.GREEN_BOLD + "Choose a column (1-10)" + Color.RESET);
                     horizontal = scanner.nextInt() - 1;
-                    if(vertical > 9 || vertical< 0){
+                    if (vertical > 9 || vertical < 0) {
                         continue;
                     }
                     break;
                 }
                 hitComboPlayer = checkHit(vertical, horizontal, players[0], players[1]);
             }
-                while (hitComboCPU){
-                    hitComboCPU = cpuAttack(players[1],players[0]);
-                    System.out.println(Color.RED_BOLD + "WHERE THE ENEMY HAS SHOT: " + Color.RESET);
-                    players[0].getPlayerGrid().printGrid();
-                }
+            while (hitComboCPU) {
+                hitComboCPU = cpuAttack(players[1], players[0]);
+                System.out.println(Color.RED_BOLD + "WHERE THE ENEMY HAS SHOT: " + Color.RESET);
+                players[0].getPlayerGrid().printGrid();
+            }
             winner = checkWin(players[0]);
-            if(winner.equals(players[0])){
-                System.out.println(players[0].getName()+ " won");
-                return;
-            }
             winner = checkWin(players[1]);
-            if(winner.equals(players[1])){
-                System.out.println(players[1].getName()+ " won");
-                return;
-            }
         }
         System.out.println(Color.GREEN_BOLD + "The winner is " + winner.getName() + Color.RESET);
     }
@@ -148,7 +140,7 @@ public class Game {
             if (cpu.getPlayerGrid().getGrid()[vertical][horizontal].equals(Color.HIT_SYMBOL.toString()) || cpu.getPlayerGrid().getGrid()[vertical][horizontal].equals(Color.MISS_SYMBOL.toString())) {
                 continue;
             }
-            if(checkHit(vertical,horizontal,cpu,player)){
+            if (checkHit(vertical, horizontal, cpu, player)) {
                 return true;
             }
             return false;
@@ -195,7 +187,7 @@ public class Game {
         System.out.println(Color.RESET);
     }
 
-    public static int menu(){
+    public static int menu() {
         Scanner scanner = new Scanner(System.in);
         System.out.println(Color.BLUE_BOLD);
         System.out.println("                              \n" +
@@ -249,11 +241,11 @@ public class Game {
                 "                          ____`-' ||___-{]_| _[}-  |     |_[___\\==--            \\/   \n" +
                 "           __..._____--==/___]_|__|_____________________________[___\\==--____,------'___  \n" +
                 "          |                                                                            /\n" +
-                "           \\_________________________________________________________________________|\n" );
+                "           \\_________________________________________________________________________|\n");
         System.out.println(Color.RESET);
         int option = scanner.nextInt();
 
-        switch (option){
+        switch (option) {
             case 1:
                 game();
                 break;
@@ -273,16 +265,145 @@ public class Game {
     public static void instructions() {
         Scanner scanner = new Scanner(System.in);
         System.out.println(Color.GREEN_BOLD);
-        System.out.println("Build your grid by choosing a row and a column.\n" +
-                "You and your enemy will take turns by choosing a position which to hit.\n" +
-                "If you hit a red dot and the message HIT will appear.\n" +
-                "If you miss a black cross and the message miss will appear");
+        System.out.println("\n" +
+                "░██████╗████████╗░█████╗░██████╗░████████╗  ██████╗░██╗░░░██╗\n" +
+                "██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝  ██╔══██╗╚██╗░██╔╝\n" +
+                "╚█████╗░░░░██║░░░███████║██████╔╝░░░██║░░░  ██████╦╝░╚████╔╝░\n" +
+                "░╚═══██╗░░░██║░░░██╔══██║██╔══██╗░░░██║░░░  ██╔══██╗░░╚██╔╝░░\n" +
+                "██████╔╝░░░██║░░░██║░░██║██║░░██║░░░██║░░░  ██████╦╝░░░██║░░░\n" +
+                "╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░  ╚═════╝░░░░╚═╝░░░\n" +
+                "\n" +
+                "██████╗░██╗░░░██╗██╗██╗░░░░░██████╗░██╗███╗░░██╗░██████╗░  ██╗░░░██╗░█████╗░██╗░░░██╗██████╗░\n" +
+                "██╔══██╗██║░░░██║██║██║░░░░░██╔══██╗██║████╗░██║██╔════╝░  ╚██╗░██╔╝██╔══██╗██║░░░██║██╔══██╗\n" +
+                "██████╦╝██║░░░██║██║██║░░░░░██║░░██║██║██╔██╗██║██║░░██╗░  ░╚████╔╝░██║░░██║██║░░░██║██████╔╝\n" +
+                "██╔══██╗██║░░░██║██║██║░░░░░██║░░██║██║██║╚████║██║░░╚██╗  ░░╚██╔╝░░██║░░██║██║░░░██║██╔══██╗\n" +
+                "██████╦╝╚██████╔╝██║███████╗██████╔╝██║██║░╚███║╚██████╔╝  ░░░██║░░░╚█████╔╝╚██████╔╝██║░░██║\n" +
+                "╚═════╝░░╚═════╝░╚═╝╚══════╝╚═════╝░╚═╝╚═╝░░╚══╝░╚═════╝░  ░░░╚═╝░░░░╚════╝░░╚═════╝░╚═╝░░╚═╝\n" +
+                "\n" +
+                "░██████╗░██████╗░██╗██████╗░██╗\n" +
+                "██╔════╝░██╔══██╗██║██╔══██╗██║\n" +
+                "██║░░██╗░██████╔╝██║██║░░██║██║\n" +
+                "██║░░╚██╗██╔══██╗██║██║░░██║╚═╝\n" +
+                "╚██████╔╝██║░░██║██║██████╔╝██╗\n" +
+                "░╚═════╝░╚═╝░░╚═╝╚═╝╚═════╝░╚═╝");
+        System.out.println(Color.GREEN_BOLD + "PRESS ANY KEY" + Color.RESET);
+        scanner.nextLine();
+        scanner.nextLine();
+        System.out.println(Color.GREEN_BOLD);
+        System.out.println("\n" +
+                "███╗░░██╗███████╗██╗░░██╗████████╗  ██╗░░░██╗░█████╗░██╗░░░██╗  ░█████╗░███╗░░██╗██████╗░\n" +
+                "████╗░██║██╔════╝╚██╗██╔╝╚══██╔══╝  ╚██╗░██╔╝██╔══██╗██║░░░██║  ██╔══██╗████╗░██║██╔══██╗\n" +
+                "██╔██╗██║█████╗░░░╚███╔╝░░░░██║░░░  ░╚████╔╝░██║░░██║██║░░░██║  ███████║██╔██╗██║██║░░██║\n" +
+                "██║╚████║██╔══╝░░░██╔██╗░░░░██║░░░  ░░╚██╔╝░░██║░░██║██║░░░██║  ██╔══██║██║╚████║██║░░██║\n" +
+                "██║░╚███║███████╗██╔╝╚██╗░░░██║░░░  ░░░██║░░░╚█████╔╝╚██████╔╝  ██║░░██║██║░╚███║██████╔╝\n" +
+                "╚═╝░░╚══╝╚══════╝╚═╝░░╚═╝░░░╚═╝░░░  ░░░╚═╝░░░░╚════╝░░╚═════╝░  ╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░\n" +
+                "\n" +
+                "██╗░░░██╗░█████╗░██╗░░░██╗██████╗░  ███████╗███╗░░██╗███████╗███╗░░░███╗██╗░░░██╗  ░██╗░░░░░░░██╗██╗██╗░░░░░██╗░░░░░\n" +
+                "╚██╗░██╔╝██╔══██╗██║░░░██║██╔══██╗  ██╔════╝████╗░██║██╔════╝████╗░████║╚██╗░██╔╝  ░██║░░██╗░░██║██║██║░░░░░██║░░░░░\n" +
+                "░╚████╔╝░██║░░██║██║░░░██║██████╔╝  █████╗░░██╔██╗██║█████╗░░██╔████╔██║░╚████╔╝░  ░╚██╗████╗██╔╝██║██║░░░░░██║░░░░░\n" +
+                "░░╚██╔╝░░██║░░██║██║░░░██║██╔══██╗  ██╔══╝░░██║╚████║██╔══╝░░██║╚██╔╝██║░░╚██╔╝░░  ░░████╔═████║░██║██║░░░░░██║░░░░░\n" +
+                "░░░██║░░░╚█████╔╝╚██████╔╝██║░░██║  ███████╗██║░╚███║███████╗██║░╚═╝░██║░░░██║░░░  ░░╚██╔╝░╚██╔╝░██║███████╗███████╗\n" +
+                "░░░╚═╝░░░░╚════╝░░╚═════╝░╚═╝░░╚═╝  ╚══════╝╚═╝░░╚══╝╚══════╝╚═╝░░░░░╚═╝░░░╚═╝░░░  ░░░╚═╝░░░╚═╝░░╚═╝╚══════╝╚══════╝\n" +
+                "\n" +
+                "████████╗░█████╗░██╗░░██╗███████╗  ████████╗██╗░░░██╗██████╗░███╗░░██╗░██████╗\n" +
+                "╚══██╔══╝██╔══██╗██║░██╔╝██╔════╝  ╚══██╔══╝██║░░░██║██╔══██╗████╗░██║██╔════╝\n" +
+                "░░░██║░░░███████║█████═╝░█████╗░░  ░░░██║░░░██║░░░██║██████╔╝██╔██╗██║╚█████╗░\n" +
+                "░░░██║░░░██╔══██║██╔═██╗░██╔══╝░░  ░░░██║░░░██║░░░██║██╔══██╗██║╚████║░╚═══██╗\n" +
+                "░░░██║░░░██║░░██║██║░╚██╗███████╗  ░░░██║░░░╚██████╔╝██║░░██║██║░╚███║██████╔╝\n" +
+                "░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░╚═╝╚══════╝  ░░░╚═╝░░░░╚═════╝░╚═╝░░╚═╝╚═╝░░╚══╝╚═════╝░\n" +
+                "\n" +
+                "░██████╗██╗░░██╗░█████╗░░█████╗░████████╗██╗███╗░░██╗░██████╗░  ███████╗░█████╗░░█████╗░██╗░░██╗\n" +
+                "██╔════╝██║░░██║██╔══██╗██╔══██╗╚══██╔══╝██║████╗░██║██╔════╝░  ██╔════╝██╔══██╗██╔══██╗██║░░██║\n" +
+                "╚█████╗░███████║██║░░██║██║░░██║░░░██║░░░██║██╔██╗██║██║░░██╗░  █████╗░░███████║██║░░╚═╝███████║\n" +
+                "░╚═══██╗██╔══██║██║░░██║██║░░██║░░░██║░░░██║██║╚████║██║░░╚██╗  ██╔══╝░░██╔══██║██║░░██╗██╔══██║\n" +
+                "██████╔╝██║░░██║╚█████╔╝╚█████╔╝░░░██║░░░██║██║░╚███║╚██████╔╝  ███████╗██║░░██║╚█████╔╝██║░░██║\n" +
+                "╚═════╝░╚═╝░░╚═╝░╚════╝░░╚════╝░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░  ╚══════╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝\n" +
+                "\n" +
+                "░█████╗░████████╗██╗░░██╗███████╗██████╗░\n" +
+                "██╔══██╗╚══██╔══╝██║░░██║██╔════╝██╔══██╗\n" +
+                "██║░░██║░░░██║░░░███████║█████╗░░██████╔╝\n" +
+                "██║░░██║░░░██║░░░██╔══██║██╔══╝░░██╔══██╗\n" +
+                "╚█████╔╝░░░██║░░░██║░░██║███████╗██║░░██║\n" +
+                "░╚════╝░░░░╚═╝░░░╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝");
+        System.out.println(Color.RESET);
+        System.out.println(Color.GREEN_BOLD + "PRESS ANY KEY" + Color.RESET);
+        scanner.nextLine();
+        scanner.nextLine();
+        System.out.println(Color.RED_BOLD);
+        System.out.println("\n" +
+                "██╗███████╗  ██╗░░░██╗░█████╗░██╗░░░██╗  ██╗░░██╗██╗████████╗  ░█████╗░\n" +
+                "██║██╔════╝  ╚██╗░██╔╝██╔══██╗██║░░░██║  ██║░░██║██║╚══██╔══╝  ██╔══██╗\n" +
+                "██║█████╗░░  ░╚████╔╝░██║░░██║██║░░░██║  ███████║██║░░░██║░░░  ███████║\n" +
+                "██║██╔══╝░░  ░░╚██╔╝░░██║░░██║██║░░░██║  ██╔══██║██║░░░██║░░░  ██╔══██║\n" +
+                "██║██║░░░░░  ░░░██║░░░╚█████╔╝╚██████╔╝  ██║░░██║██║░░░██║░░░  ██║░░██║\n" +
+                "╚═╝╚═╝░░░░░  ░░░╚═╝░░░░╚════╝░░╚═════╝░  ╚═╝░░╚═╝╚═╝░░░╚═╝░░░  ╚═╝░░╚═╝\n" +
+                "\n" +
+                "██████╗░███████╗██████╗░  ░█████╗░██╗██████╗░░█████╗░██╗░░░░░███████╗\n" +
+                "██╔══██╗██╔════╝██╔══██╗  ██╔══██╗██║██╔══██╗██╔══██╗██║░░░░░██╔════╝\n" +
+                "██████╔╝█████╗░░██║░░██║  ██║░░╚═╝██║██████╔╝██║░░╚═╝██║░░░░░█████╗░░\n" +
+                "██╔══██╗██╔══╝░░██║░░██║  ██║░░██╗██║██╔══██╗██║░░██╗██║░░░░░██╔══╝░░\n" +
+                "██║░░██║███████╗██████╔╝  ╚█████╔╝██║██║░░██║╚█████╔╝███████╗███████╗\n" +
+                "╚═╝░░╚═╝╚══════╝╚═════╝░  ░╚════╝░╚═╝╚═╝░░╚═╝░╚════╝░╚══════╝╚══════╝\n" +
+                "\n" +
+                "░█████╗░██████╗░██████╗░███████╗░█████╗░██████╗░░██████╗\n" +
+                "██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔════╝\n" +
+                "███████║██████╔╝██████╔╝█████╗░░███████║██████╔╝╚█████╗░\n" +
+                "██╔══██║██╔═══╝░██╔═══╝░██╔══╝░░██╔══██║██╔══██╗░╚═══██╗\n" +
+                "██║░░██║██║░░░░░██║░░░░░███████╗██║░░██║██║░░██║██████╔╝\n" +
+                "╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░");
+        System.out.println(Color.GREEN_BOLD + "PRESS ANY KEY" + Color.RESET);
+        scanner.nextLine();
+        scanner.nextLine();
+        System.out.println(Color.RESET);
+        System.out.println(Color.BLACK_BOLD);
+        System.out.println("\n" +
+                "██╗███████╗  ██╗░░░██╗░█████╗░██╗░░░██╗  ███╗░░░███╗██╗░██████╗░██████╗  ░█████╗░\n" +
+                "██║██╔════╝  ╚██╗░██╔╝██╔══██╗██║░░░██║  ████╗░████║██║██╔════╝██╔════╝  ██╔══██╗\n" +
+                "██║█████╗░░  ░╚████╔╝░██║░░██║██║░░░██║  ██╔████╔██║██║╚█████╗░╚█████╗░  ███████║\n" +
+                "██║██╔══╝░░  ░░╚██╔╝░░██║░░██║██║░░░██║  ██║╚██╔╝██║██║░╚═══██╗░╚═══██╗  ██╔══██║\n" +
+                "██║██║░░░░░  ░░░██║░░░╚█████╔╝╚██████╔╝  ██║░╚═╝░██║██║██████╔╝██████╔╝  ██║░░██║\n" +
+                "╚═╝╚═╝░░░░░  ░░░╚═╝░░░░╚════╝░░╚═════╝░  ╚═╝░░░░░╚═╝╚═╝╚═════╝░╚═════╝░  ╚═╝░░╚═╝\n" +
+                "\n" +
+                "██████╗░██╗░░░░░░█████╗░░█████╗░██╗░░██╗  ░█████╗░██████╗░░█████╗░░██████╗░██████╗\n" +
+                "██╔══██╗██║░░░░░██╔══██╗██╔══██╗██║░██╔╝  ██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔════╝\n" +
+                "██████╦╝██║░░░░░███████║██║░░╚═╝█████═╝░  ██║░░╚═╝██████╔╝██║░░██║╚█████╗░╚█████╗░\n" +
+                "██╔══██╗██║░░░░░██╔══██║██║░░██╗██╔═██╗░  ██║░░██╗██╔══██╗██║░░██║░╚═══██╗░╚═══██╗\n" +
+                "██████╦╝███████╗██║░░██║╚█████╔╝██║░╚██╗  ╚█████╔╝██║░░██║╚█████╔╝██████╔╝██████╔╝\n" +
+                "╚═════╝░╚══════╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚═╝  ░╚════╝░╚═╝░░╚═╝░╚════╝░╚═════╝░╚═════╝░\n" +
+                "\n" +
+                "░█████╗░██████╗░██████╗░███████╗░█████╗░██████╗░░██████╗\n" +
+                "██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔════╝\n" +
+                "███████║██████╔╝██████╔╝█████╗░░███████║██████╔╝╚█████╗░\n" +
+                "██╔══██║██╔═══╝░██╔═══╝░██╔══╝░░██╔══██║██╔══██╗░╚═══██╗\n" +
+                "██║░░██║██║░░░░░██║░░░░░███████╗██║░░██║██║░░██║██████╔╝\n" +
+                "╚═╝░░╚═╝╚═╝░░░░░╚═╝░░░░░╚══════╝╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░");
+
+        System.out.println(Color.RESET);
+        System.out.println(Color.GREEN_BOLD + "PRESS ANY KEY" + Color.RESET);
+        scanner.nextLine();
+        scanner.nextLine();
+
+        System.out.println(Color.BLUE_BOLD);
+        System.out.println("\n" +
+                "██████╗░███████╗░██████╗████████╗██████╗░░█████╗░██╗░░░██╗  ███████╗██╗░░░██╗███████╗██████╗░██╗░░░██╗\n" +
+                "██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚██╗░██╔╝  ██╔════╝██║░░░██║██╔════╝██╔══██╗╚██╗░██╔╝\n" +
+                "██║░░██║█████╗░░╚█████╗░░░░██║░░░██████╔╝██║░░██║░╚████╔╝░  █████╗░░╚██╗░██╔╝█████╗░░██████╔╝░╚████╔╝░\n" +
+                "██║░░██║██╔══╝░░░╚═══██╗░░░██║░░░██╔══██╗██║░░██║░░╚██╔╝░░  ██╔══╝░░░╚████╔╝░██╔══╝░░██╔══██╗░░╚██╔╝░░\n" +
+                "██████╔╝███████╗██████╔╝░░░██║░░░██║░░██║╚█████╔╝░░░██║░░░  ███████╗░░╚██╔╝░░███████╗██║░░██║░░░██║░░░\n" +
+                "╚═════╝░╚══════╝╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝░╚════╝░░░░╚═╝░░░  ╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░\n" +
+                "\n" +
+                "███████╗███╗░░██╗███████╗███╗░░░███╗██╗░░░██╗  ░██████╗██╗░░██╗██╗██████╗░██╗\n" +
+                "██╔════╝████╗░██║██╔════╝████╗░████║╚██╗░██╔╝  ██╔════╝██║░░██║██║██╔══██╗██║\n" +
+                "█████╗░░██╔██╗██║█████╗░░██╔████╔██║░╚████╔╝░  ╚█████╗░███████║██║██████╔╝██║\n" +
+                "██╔══╝░░██║╚████║██╔══╝░░██║╚██╔╝██║░░╚██╔╝░░  ░╚═══██╗██╔══██║██║██╔═══╝░╚═╝\n" +
+                "███████╗██║░╚███║███████╗██║░╚═╝░██║░░░██║░░░  ██████╔╝██║░░██║██║██║░░░░░██╗\n" +
+                "╚══════╝╚═╝░░╚══╝╚══════╝╚═╝░░░░░╚═╝░░░╚═╝░░░  ╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░░░░╚═╝");
         System.out.println(Color.RESET);
     }
 
 
     public static boolean checkHit(int vertical, int horizontal, Player attacker, Player target) {
-        if(!attacker.getMatchGrid().getGrid()[vertical][horizontal].equals("-")){
+        if (!attacker.getMatchGrid().getGrid()[vertical][horizontal].equals("-")) {
             System.out.println(Color.GREEN_BOLD + "We already attacked that position sir!" + Color.RESET);
             return true;
         }
@@ -290,13 +411,13 @@ public class Game {
             attacker.getMatchGrid().getGrid()[vertical][horizontal] = Color.HIT_SYMBOL.toString();
             target.getPlayerGrid().getGrid()[vertical][horizontal] = Color.HIT_SYMBOL.toString();
             attacker.setCounterHits(attacker.getCounterHits() + 1);
-            if(attacker.equals(players[1])){
+            if (attacker.equals(players[1])) {
                 System.out.println("ENEMY HIT");
                 return true;
             }
             System.out.println(Color.GREEN_BOLD + "HIT!!" + Color.RESET);
             return true;
-        }else{
+        } else {
             if (attacker.equals(players[1])) {
                 System.out.println("ENEMY MISS");
                 attacker.getMatchGrid().getGrid()[vertical][horizontal] = Color.MISS_SYMBOL.toString();
