@@ -80,14 +80,35 @@ public class Game {
             winner = checkWin(players[0]);
             if (winner.equals(players[0])) {
                 System.out.println(players[0].getName() + " won");
+                System.out.println("      .-=========-.\n" +
+                        "              \\'-=======-'/\n" +
+                        "              _|   .=.   |_\n" +
+                        "             ((|  {{1}}  |))\n" +
+                        "              \\|   /|\\   |/\n" +
+                        "               \\__ '`' __/\n" +
+                        "                 _`) (`_\n" +
+                        "          jgs  _/_______\\_\n" +
+                        "              /___________\\\n" +
+                        "\n");
                 return;
             }
             winner = checkWin(players[1]);
             if (winner.equals(players[1])) {
                 System.out.println(players[1].getName() + " won");
+                System.out.println("      .-=========-.\n" +
+                        "              \\'-=======-'/\n" +
+                        "              _|   .=.   |_\n" +
+                        "             ((|  {{1}}  |))\n" +
+                        "              \\|   /|\\   |/\n" +
+                        "               \\__ '`' __/\n" +
+                        "                 _`) (`_\n" +
+                        "          jgs  _/_______\\_\n" +
+                        "              /___________\\\n" +
+                        "\n");
                 return;
             }
         }
+
 
 
     }
@@ -131,6 +152,18 @@ public class Game {
             winner = checkWin(players[1]);
         }
         System.out.println(Color.GREEN_BOLD + "The winner is " + winner.getName() + Color.RESET);
+
+        System.out.println(Color.YELLOW_BOLD);
+        System.out.println("      .-=========-.\n" +
+                "              \\'-=======-'/\n" +
+                "              _|   .=.   |_\n" +
+                "             ((|  {{1}}  |))\n" +
+                "              \\|   /|\\   |/\n" +
+                "               \\__ '`' __/\n" +
+                "                 _`) (`_\n" +
+                "          jgs  _/_______\\_\n" +
+                "              /___________\\\n" +
+                "\n");
     }
 
     public static boolean cpuAttack(Player cpu, Player player) {
