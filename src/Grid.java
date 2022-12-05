@@ -133,12 +133,13 @@ public class Grid {
         }
         System.out.println(Color.GREEN_BOLD + "Horizontal or Vertical Captain?" + Color.RESET);
         String orientation = scanner.next().toUpperCase();
-
         switch (orientation) {
             case "HORIZONTAL":
             case "H":
                 try {
-                    placeShipHorizontal(vertical, horizontal, ship, playerGrid);
+                    if(!placeShipHorizontal(vertical, horizontal, ship, playerGrid)){
+                        return false;
+                    }
                 } catch (Exception e) {
                     System.out.println(Color.RED_BOLD + "Sir that ship won't fit there. Please focus the enemy is upon us!" + Color.RESET);
                     return false;
@@ -147,7 +148,10 @@ public class Grid {
             case "VERTICAL":
             case "V":
                 try {
-                    placeShipVertical(vertical, horizontal, ship, playerGrid);
+                    if(!placeShipVertical(vertical, horizontal, ship, playerGrid)){
+                        return false;
+                    }
+
                 } catch (Exception e) {
                     System.out.println(Color.RED_BOLD + "Sir that ship won't fit there. Please focus the enemy is upon us!" + Color.RESET);
                     return false;
@@ -163,7 +167,7 @@ public class Grid {
         }
     }
 
-    public void placeShipHorizontal(int vertical, int horizontal, Ship ship, Grid playerGrid) throws Exception {
+    public boolean placeShipHorizontal(int vertical, int horizontal, Ship ship, Grid playerGrid) throws Exception {
         //Place horizontal
         int safecheckerHor = horizontal;
         int j = horizontal;
@@ -175,7 +179,7 @@ public class Grid {
                 shipSizeCheck--;
             } else {
                 System.out.println(Color.RED_BOLD + "We can't stack boats on top of each other sir" + Color.RESET);
-                return;
+                return false;
             }
 
         }
@@ -188,9 +192,10 @@ public class Grid {
             shipSizeCheck2--;
             j++;
         }
+        return true;
     }
 
-    public void placeShipVertical(int vertical, int horizontal, Ship ship, Grid playerGrid) throws Exception {
+    public boolean placeShipVertical(int vertical, int horizontal, Ship ship, Grid playerGrid) throws Exception {
         int j = vertical;
         int safecheckerVer = vertical;
         int shipSizeChecker = ship.size;
@@ -204,7 +209,7 @@ public class Grid {
                 shipSizeChecker--;
             } else {
                 System.out.println(Color.RED_BOLD + "We can't stack boats on top of each other sir" + Color.RESET);
-                return;
+                return false;
             }
 
         }
@@ -215,6 +220,7 @@ public class Grid {
             shipSizeCheck2--;
             j++;
         }
+        return true;
     }
 
     public int letterToIndex(String option) {
