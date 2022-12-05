@@ -55,51 +55,54 @@ public class Grid {
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
 
+        while (!BattleShipStat) {
         try {
-            while (!BattleShipStat) {
                 System.out.println();
                 System.out.println(Color.GREEN_BOLD + "Let's place a Battleship (length 4)!" + Color.RESET);
                 BattleShipStat = choosePosition(new Battleship4(), player.getPlayerGrid());
-            }
         } catch (Exception e) {
             System.out.println(Color.RED_BOLD + "Sir please focus" + Color.RESET);
+        }
         }
 
 
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
+
+        while (!CruiserStat) {
         try {
-            while (!CruiserStat) {
                 System.out.println();
                 System.out.println(Color.GREEN_BOLD + "Let's place a Cruiser (length 3)!" + Color.RESET);
                 CruiserStat = choosePosition(new Cruiser3(), player.getPlayerGrid());
-            }
         } catch (Exception e) {
             System.out.println(Color.RED_BOLD + "Sir please focus" + Color.RESET);
+        }
         }
 
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
+
+        while (!SubmarineStat) {
         try {
-            while (!SubmarineStat) {
                 System.out.println();
                 System.out.println(Color.GREEN_BOLD + "Let's place a Submarine (length 3)!" + Color.RESET);
                 SubmarineStat = choosePosition(new Submarine3(), player.getPlayerGrid());
-            }
+
         } catch (Exception e) {
             System.out.println(Color.RED_BOLD + "Sir please focus" + Color.RESET);
-        }
+        }}
 
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
         player.getPlayerGrid().printGrid();
+
+        while (!DestroyerStat) {
         try {
-            while (!DestroyerStat) {
                 System.out.println();
                 System.out.println(Color.GREEN_BOLD + "Finally, let's place a Destroyer (length 2)!" + Color.RESET);
                 DestroyerStat = choosePosition(new Destroyer2(), player.getPlayerGrid());
-            }
         } catch (Exception e) {
             System.out.println(Color.RED_BOLD + "Sir please focus" + Color.RESET);
+        }
         }
 
         System.out.println(Color.GREEN_BOLD + "Current grid:" + Color.RESET);
@@ -196,7 +199,7 @@ public class Grid {
         }
 
         while (shipSizeChecker > 0) {
-            if (playerGrid.grid[vertical][safecheckerVer].equals("-")) {
+            if (playerGrid.grid[safecheckerVer][horizontal].equals("-")) {
                 safecheckerVer++;
                 shipSizeChecker--;
             } else {
@@ -209,7 +212,7 @@ public class Grid {
         int shipSizeCheck2 = ship.size;
         while (shipSizeCheck2 > 0) {
             playerGrid.grid[j][horizontal] = ship.symbol;
-            shipSizeChecker--;
+            shipSizeCheck2--;
             j++;
         }
     }
